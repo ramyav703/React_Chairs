@@ -52,7 +52,7 @@ h1 {
   color: white;
   float: right;
   align-self: flex-end;
-  max-width: 50%;
+  max-width: 30%;
   min-width: 4%;
 }
 
@@ -61,7 +61,7 @@ h1 {
   color: black;
   float: left;
   position: relative; /* Add this line */
-  max-width: 50%; /* Add this line */
+  max-width: 30%; /* Add this line */
   min-width: 100px;
 }
 
@@ -262,4 +262,71 @@ button:hover {
   margin-top: 12px; /* Margin above the time */
   font-size: 0.9em; /* Slightly smaller font size */
   color: #666; /* Gray text color */
+}
+
+
+.message.bot.multiple-products .products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Add some space between the product items */
+}
+
+.message.bot.multiple-products .product-item {
+  flex: 1 1 calc(50% - 20px); /* Adjust the width to fit two products per line, accounting for the gap */
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.message.bot.multiple-products .product-item img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.message.bot.multiple-products .product-item h3 {
+  margin: 5px 0;
+}
+
+.message-time {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.8em;
+  color: #888;
+}
+
+.message.bot.chair-types {
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 15px; /* Increased border-radius for a more rounded box */
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.message.bot.chair-types h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.message.bot.chair-types ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.message.bot.chair-types ul li {
+  margin: 5px 0;
+  font-size: 1em;
+  color: #555;
+}
+
+.message-time {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.8em;
+  color: #888;
 }

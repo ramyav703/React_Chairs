@@ -6,98 +6,7 @@ import { FiSend } from 'react-icons/fi';
 import { GiOfficeChair } from 'react-icons/gi'; // Import a chair icon from React Icons
 import { motion } from 'framer-motion'; // Import Framer Motion for animation
 import renderMessage from './renderMessage'; // Import the renderMessage function
-
-const OrderForm = ({ onClose, onOrderSuccess, productID }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    pincode: '',
-    creditCardNumber: '',
-    creditCardExpiry: '',
-    productId: productID
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      console.log('formData:', formData);
-      const response = await axios.post('http://localhost:8000/api/order/', formData);
-      console.log('response:', response);
-      if (response.status === 200) {
-
-        const { confirmationId, productId, productName, productPrice } = response.data;
-        onOrderSuccess({ confirmationId, productId, productName, productPrice });
-        onClose();
-      }
-    } catch (error) {
-      console.error('Error submitting order:', error);
-    }
-  };
-
-  return (
-        <div className="modal">
-      <div className="modal-content">
-        <h2>Confirm Your Order</h2>
-        <form id="order-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Name:</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Address:</label>
-            <input type="text" name="address" value={formData.address} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label>Pincode:</label>
-            <input
-              type="text"
-              name="pincode"
-              value={formData.pincode}
-              onChange={handleChange}
-              required
-              pattern="[A-Za-z0-9]{5}" // Ensure the pincode is exactly 6 alphanumeric characters
-              title="Pincode must be exactly 6 alphanumeric characters"
-            />
-          </div>
-          <div className="form-group">
-            <label>Credit Card Number:</label>
-            <input
-              type="text"
-              name="creditCardNumber"
-              value={formData.creditCardNumber}
-              onChange={handleChange}
-              required
-              pattern="\d{12}" // Ensure the credit card number is exactly 12 digits with hyphens
-              title="Credit Card Number must be in the format XXXX-XXXX-XXXX"
-            />
-          </div>
-          <div className="form-group">
-            <label>Credit Card Expiry (MM/YY):</label>
-            <input
-              type="month"
-              name="creditCardExpiry"
-              value={formData.creditCardExpiry}
-              onChange={handleChange}
-              required
-              min={new Date().toISOString().slice(0, 7)} // Ensure the expiry date is greater than today's date
-              title="Credit Card Expiry must be greater than today's date"
-            />
-          </div>
-          <button type="submit">Submit</button>
-          <button type="button" onClick={onClose}>Cancel</button>
-        </form>
-      </div>
-    </div>
-  );
-};
+import OrderForm from './orderHandler';
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -143,32 +52,7 @@ const App = () => {
     setTimeout(() => {
       setIsChairUpright(true); // The chair will become upright after falling
     }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-        useEffect(() => {
-        if (messages.length > 0) {
-          let productID = null;
-          for (let i = messages.length - 1; i >= 0; i--) {
-            if (messages[i].type === 'product') {
-              productID = messages[i].productId;
-              break;
-            }
-          }
-      
-          const buyNowButtons = document.querySelectorAll('.buy-now-button');
-          buyNowButtons.forEach((button) => {
-            const clonedButton = button.cloneNode(true);
-            button.parentNode.replaceChild(clonedButton, button);
-            clonedButton.addEventListener('click', () => handleBuyNowClick(productID)); // Pass productID to event handler
-          });
-        }
-      }, [messages]);
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -185,20 +69,32 @@ const App = () => {
       if (response.data.type === 'reply') {
         const botMessage = { text: response.data.text, sender: 'bot', time: getCurrentTime() };
         setMessages((prev) => [...prev, botMessage]);
-      } else if (response.data.type === 'product') {
-        const productMessage = {
+        console.log(botMessage)
+      }       else if (response.data.type === 'product') {
+        const productMessages = response.data.products.map(product => ({
           type: 'product',
-          name: response.data['product-name'],
-          productType: response.data['product-type'],
-          price: response.data['price'],
-          description: response.data['description'],
-          image: `data:image/png;base64,${response.data.image}`,
+          name: product.name,
+          productType: product.chair_type,
+          price: product.price,
+          description: product.description,
+          image: product.image,  // Use the image URL directly
           sender: 'bot',
           time: getCurrentTime(),
-          productId: response.data['product-id']
+          productId: product.id
+        }));
+        setMessages((prev) => [...prev, ...productMessages]);
+      } else if (response.data.type === 'types') {
+        const typesMessage = {
+          type: 'types',
+          chair_types: response.data.chair_types,
+          sender: 'bot',
+          time: getCurrentTime()
         };
-        setMessages((prev) => [...prev, productMessage]);
+        setMessages((prev) => [...prev, typesMessage]);
       }
+
+
+
 
     } catch (error) {
       console.error('Error:', error);
@@ -226,7 +122,7 @@ const App = () => {
       <div className="chat-box" ref={chatBoxRef}>
         {messages.map((msg, index) => (
           <div key={index}>
-            {renderMessage(msg)}
+            {renderMessage(msg, handleBuyNowClick)}
           </div>
         ))}
         {loading && <div className="message bot loading">Loading...</div>}
