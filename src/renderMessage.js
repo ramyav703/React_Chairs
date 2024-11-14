@@ -6,7 +6,7 @@ const renderMessage = (message, handleBuyNowClick) => {
   if (message.type === "product") {
     return (
       <div className="message bot">
-        <img src={message.image} alt="Product Image" />
+        <img src={message.image} alt={message.name} />
         <h3>
           <strong>Name:</strong> {message.name}
         </h3>
@@ -49,7 +49,7 @@ const renderMessage = (message, handleBuyNowClick) => {
         <div className="products-grid">
           {message.products.map((product, index) => (
             <div key={index} className="product-item">
-              <img src={product.image} alt="Product Image" />
+              <img src={product.image} alt={product.name} />
               <h3>
                 <strong>Name:</strong> {product.name}
               </h3>
