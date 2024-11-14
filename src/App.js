@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
-import './App.css';
-import { FiSend } from 'react-icons/fi';
-import { GiOfficeChair } from 'react-icons/gi'; // Import a chair icon from React Icons
-import { motion } from 'framer-motion'; // Import Framer Motion for animation
-import renderMessage from './renderMessage'; // Import the renderMessage function
-import OrderForm from './orderHandler';
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
+import "./App.css";
+import { FiSend } from "react-icons/fi";
+import { GiOfficeChair } from "react-icons/gi"; // Import a chair icon from React Icons
+import { motion } from "framer-motion"; // Import Framer Motion for animation
+import renderMessage from "./renderMessage"; // Import the renderMessage function
+import OrderForm from "./orderHandler";
 
 const App = () => {
   const [messages, setMessages] = useState([]);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
   const chatBoxRef = useRef(null);
   const [isChairUpright, setIsChairUpright] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [selectedProductID, setSelectedProductID] = useState(null); // Define selectedProductID state
 
-  const handleBuyNowClick = (productID) => {
-    console.log('Product ID:', productID);
-    setSelectedProductID(productID);
+  const handleBuyNowClick = (message) => {
+    console.log("message", message);
+    setSelectedProductID(message);
     setShowForm(true);
   };
 
@@ -27,77 +27,93 @@ const App = () => {
     setShowForm(false);
   };
 
-  const handleOrderSuccess = ({ confirmationId, productId, productName, productPrice }) => {
+  const handleOrderSuccess = ({
+    confirmationId,
+    productId,
+    productName,
+    productPrice,
+  }) => {
     const confirmationMessage = {
-      type: 'confirmation',
+      type: "confirmation",
       confirmationId: confirmationId,
       productId: productId,
       productName: productName,
       productPrice: productPrice,
-      sender: 'bot',
-      time: getCurrentTime()
+      sender: "bot",
+      time: getCurrentTime(),
     };
     setMessages((prev) => [...prev, confirmationMessage]);
   };
 
   const getCurrentTime = () => {
     const date = new Date();
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   useEffect(() => {
-    const initialMessage = { text: "Hello! I'm the ChairBot, your personal assistant. How can I help you today with furniture solutions?", sender: 'bot', time: getCurrentTime() };
+    const initialMessage = {
+      text: "Hello! I'm the ChairBot, your personal assistant. How can I help you today with furniture solutions?",
+      sender: "bot",
+      time: getCurrentTime(),
+    };
     setMessages([initialMessage]);
     // Trigger the chair fall animation after 1 second
     setTimeout(() => {
       setIsChairUpright(true); // The chair will become upright after falling
     }, 1000);
-  }, []); 
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userInput.trim()) return;
 
-    const newMessage = { text: userInput, sender: 'user', time: getCurrentTime() };
+    const newMessage = {
+      text: userInput,
+      sender: "user",
+      time: getCurrentTime(),
+    };
     setMessages((prev) => [...prev, newMessage]);
-    setUserInput('');
+    setUserInput("");
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/chatbot/', { message: userInput });
-      
-      if (response.data.type === 'reply') {
-        const botMessage = { text: response.data.text, sender: 'bot', time: getCurrentTime() };
+      const response = await axios.post("http://localhost:8000/ask/", {
+        message: userInput,
+      });
+
+      if (response.data.type === "reply") {
+        const botMessage = {
+          text: response.data.message,
+          sender: "bot",
+          time: getCurrentTime(),
+        };
         setMessages((prev) => [...prev, botMessage]);
-        console.log(botMessage)
-      }       else if (response.data.type === 'product') {
-        const productMessages = response.data.products.map(product => ({
-          type: 'product',
+        console.log(botMessage);
+      } else if (response.data.type === "product") {
+        const productMessages = response.data.products.map((product) => ({
+          type: "product",
           name: product.name,
-          productType: product.chair_type,
+          chair_type: product.chair_type,
           price: product.price,
           description: product.description,
-          image: product.image,  // Use the image URL directly
-          sender: 'bot',
+          discount: product.discount,
+          image: product.image, // Use the image URL directly
+          sender: "bot",
           time: getCurrentTime(),
-          productId: product.id
+          id: product.id,
         }));
         setMessages((prev) => [...prev, ...productMessages]);
-      } else if (response.data.type === 'types') {
+      } else if (response.data.type === "types") {
         const typesMessage = {
-          type: 'types',
+          type: "types",
           chair_types: response.data.chair_types,
-          sender: 'bot',
-          time: getCurrentTime()
+          sender: "bot",
+          time: getCurrentTime(),
         };
         setMessages((prev) => [...prev, typesMessage]);
       }
-
-
-
-
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     } finally {
       setLoading(false); // Ensure loading is set to false even if the API call fails
     }
@@ -105,25 +121,23 @@ const App = () => {
 
   return (
     <div className="chat-container">
-      <motion.div 
+      <motion.div
         className="chair-animation"
         initial={{ y: -200, rotate: -90 }} // Start position: above and rotated
         animate={{
           y: isChairUpright ? 0 : -200, // End position: aligned with headline
-          rotate: isChairUpright ? 0 : -90 // Rotate back to upright
+          rotate: isChairUpright ? 0 : -90, // Rotate back to upright
         }}
-        transition={{ duration: 2, ease: 'easeOut' }} // Smooth transition with ease-out effect
+        transition={{ duration: 2, ease: "easeOut" }} // Smooth transition with ease-out effect
       >
         <GiOfficeChair size={60} color="#4caf50" /> {/* Chair icon */}
       </motion.div>
 
-      <h1 style={{ textAlign: 'center' }}>ChairBot</h1>
+      <h1 style={{ textAlign: "center" }}>ChairBot</h1>
 
       <div className="chat-box" ref={chatBoxRef}>
         {messages.map((msg, index) => (
-          <div key={index}>
-            {renderMessage(msg, handleBuyNowClick)}
-          </div>
+          <div key={index}>{renderMessage(msg, handleBuyNowClick)}</div>
         ))}
         {loading && <div className="message bot loading">Loading...</div>}
       </div>
@@ -132,7 +146,7 @@ const App = () => {
         <OrderForm
           onClose={handleCloseForm}
           onOrderSuccess={handleOrderSuccess}
-          productID={selectedProductID}
+          product={selectedProductID}
         />
       )}
       <form onSubmit={handleSubmit}>
