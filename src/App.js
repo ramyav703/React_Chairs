@@ -3,7 +3,11 @@ import "./App.css";
 import { GiOfficeChair } from "react-icons/gi";
 import Chat from "./Chat";
 import Home from "./Home";
-import Lounge from "./Lounge"; // Import Lounge component
+import Lounge from "./Lounge";
+import Recliner from "./Recliner";
+import Patio from "./Patio";
+import Gaming from "./Gaming";
+import Others from "./Others";
 
 const App = () => {
   const [isChatVisible, setIsChatVisible] = useState(false);
@@ -14,8 +18,15 @@ const App = () => {
       case "Home":
         return <Home />;
       case "Lounge":
-        return <Lounge />; // Render Lounge component
-      // Add cases for other pages here
+        return <Lounge />;
+      case "Recliner":
+        return <Recliner />;
+      case "Patio":
+        return <Patio />;
+      case "Gaming":
+        return <Gaming />;
+      case "Others":
+        return <Others />;
       default:
         return <Home />;
     }
@@ -24,7 +35,7 @@ const App = () => {
   return (
     <div className="app-container">
       <header>
-        <h1>Chair& Co.</h1>
+        <h1>Chair & Co.</h1>
         <nav>
           <ul>
             <li onClick={() => setActivePage("Home")}>Home</li>
@@ -33,7 +44,7 @@ const App = () => {
             <li onClick={() => setActivePage("Patio")}>Patio</li>
             <li onClick={() => setActivePage("Gaming")}>Gaming</li>
             <li onClick={() => setActivePage("Others")}>Others</li>
-            <li onClick={() => setActivePage("Carts")}>Carts</li>
+            <li onClick={() => setActivePage("Cart")}>Cart</li>
           </ul>
         </nav>
       </header>

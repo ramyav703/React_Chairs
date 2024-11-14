@@ -8,12 +8,51 @@
   margin-bottom: 20px;
 }
 
-.lounge-container ul {
-  list-style-type: none;
-  padding: 0;
+.lounge-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.lounge-container li {
+.lounge-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  text-align: left;
+}
+
+.lounge-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.lounge-item h2 {
   font-size: 1.5em;
   margin: 10px 0;
+}
+
+.lounge-item p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.buy-now-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.buy-now-button:hover {
+  background-color: #45a049;
 }
