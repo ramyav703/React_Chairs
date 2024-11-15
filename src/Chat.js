@@ -113,7 +113,8 @@ const Chat = ({ isChatVisible, setIsChatVisible }) => {
         } else if (response.data.type === "input_image") {
           const inputImageMessage = {
             type: "input_image",
-            text: response.data.text,
+            text: response.data.message,
+            query: response.data.query,
             order_number: response.data.order_number,
             sender: "bot",
             time: getCurrentTime(),

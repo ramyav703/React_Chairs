@@ -23,6 +23,7 @@ const InputImageMessage = ({ message }) => {
 
     const formData = new FormData();
     formData.append('order_number', message.order_number);
+    formData.append('query', message.query)
     formData.append('document', file);
 
     try {
