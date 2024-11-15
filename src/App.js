@@ -8,10 +8,12 @@ import Recliner from "./Recliner";
 import Patio from "./Patio";
 import Gaming from "./Gaming";
 import Others from "./Others";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const App = () => {
   const [isChatVisible, setIsChatVisible] = useState(false);
-  const [activePage, setActivePage] = useState("Home");
+  const [activePage, setActivePage] = useState("SignIn");
 
   const renderPage = () => {
     switch (activePage) {
@@ -27,8 +29,12 @@ const App = () => {
         return <Gaming />;
       case "Others":
         return <Others />;
+      case "SignIn":
+        return <SignIn setActivePage={setActivePage} />;
+      case "SignUp":
+        return <SignUp setActivePage={setActivePage} />;
       default:
-        return <Home />;
+        return <SignIn setActivePage={setActivePage} />;
     }
   };
 
@@ -44,7 +50,12 @@ const App = () => {
             <li onClick={() => setActivePage("Patio")}>Patio</li>
             <li onClick={() => setActivePage("Gaming")}>Gaming</li>
             <li onClick={() => setActivePage("Others")}>Others</li>
-            <li onClick={() => setActivePage("Cart")}>Cart</li>
+            {activePage === "SignIn" && (
+              <li onClick={() => setActivePage("SignUp")}>Sign Up</li>
+            )}
+            {activePage !== "SignIn" && activePage !== "SignUp" && (
+              <li onClick={() => setActivePage("SignIn")}>Logout</li>
+            )}
           </ul>
         </nav>
       </header>

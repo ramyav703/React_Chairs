@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
-import "./orderHandler"; // Import the orderHandler.js file
+import "./orderHandler"; // Import the orderHandler.js 
+import InputImageMessage from './InputImageMessage';
 
 const renderMessage = (message, handleBuyNowClick) => {
   if (message.type === "product") {
@@ -76,6 +77,8 @@ const renderMessage = (message, handleBuyNowClick) => {
         <span className="message-time">{message.time}</span>
       </div>
     );
+  } else if (message.type === "input_image") {
+    return <InputImageMessage message={message} />;
   } else {
     return (
       <div className={`message ${message.sender}`}>

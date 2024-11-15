@@ -62,61 +62,70 @@ const Chat = ({ isChatVisible, setIsChatVisible }) => {
     }, 1000);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!userInput.trim()) return;
-
-    const newMessage = {
-      text: userInput,
-      sender: "user",
-      time: getCurrentTime(),
-    };
-    setMessages((prev) => [...prev, newMessage]);
-    setUserInput("");
-    setLoading(true);
-
-    try {
-      const response = await axios.post("http://localhost:8000/ask/", {
-        message: userInput,
-      });
-
-      if (response.data.type === "reply") {
-        const botMessage = {
-          text: response.data.message,
-          sender: "bot",
-          time: getCurrentTime(),
-        };
-        setMessages((prev) => [...prev, botMessage]);
-        console.log(botMessage);
-      } else if (response.data.type === "product") {
-        const productMessages = response.data.products.map((product) => ({
-          type: "product",
-          name: product.name,
-          chair_type: product.chair_type,
-          price: product.price,
-          description: product.description,
-          discount: product.discount,
-          image: product.image,
-          sender: "bot",
-          time: getCurrentTime(),
-          id: product.id,
-        }));
-        setMessages((prev) => [...prev, ...productMessages]);
-      } else if (response.data.type === "types") {
-        const typesMessage = {
-          type: "types",
-          chair_types: response.data.chair_types,
-          sender: "bot",
-          time: getCurrentTime(),
-        };
-        setMessages((prev) => [...prev, typesMessage]);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      if (!userInput.trim()) return;
+  
+      const newMessage = {
+        text: userInput,
+        sender: "user",
+        time: getCurrentTime(),
+      };
+      setMessages((prev) => [...prev, newMessage]);
+      setUserInput("");
+      setLoading(true);
+  
+      try {
+        const response = await axios.post("http://localhost:8000/ask/", {
+          message: userInput,
+        });
+  
+        if (response.data.type === "reply") {
+          const botMessage = {
+            text: response.data.message,
+            sender: "bot",
+            time: getCurrentTime(),
+          };
+          setMessages((prev) => [...prev, botMessage]);
+          console.log(botMessage);
+        } else if (response.data.type === "product") {
+          const productMessages = response.data.products.map((product) => ({
+            type: "product",
+            name: product.name,
+            chair_type: product.chair_type,
+            price: product.price,
+            description: product.description,
+            discount: product.discount,
+            image: product.image,
+            sender: "bot",
+            time: getCurrentTime(),
+            id: product.id,
+          }));
+          setMessages((prev) => [...prev, ...productMessages]);
+        } else if (response.data.type === "types") {
+          const typesMessage = {
+            type: "types",
+            chair_types: response.data.chair_types,
+            sender: "bot",
+            time: getCurrentTime(),
+          };
+          setMessages((prev) => [...prev, typesMessage]);
+        } else if (response.data.type === "input_image") {
+          const inputImageMessage = {
+            type: "input_image",
+            text: response.data.text,
+            order_number: response.data.order_number,
+            sender: "bot",
+            time: getCurrentTime(),
+          };
+          setMessages((prev) => [...prev, inputImageMessage]);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   return (
     <div className="chat-container">

@@ -56,3 +56,239 @@
 .buy-now-button:hover {
   background-color: #45a049;
 }
+
+.recliner-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.recliner-container h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.recliner-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recliner-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  text-align: left;
+}
+
+.recliner-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.recliner-item h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.recliner-item p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.buy-now-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.buy-now-button:hover {
+  background-color: #45a049;
+}
+
+.patio-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.patio-container h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.patio-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.patio-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  text-align: left;
+}
+
+.patio-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.patio-item h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.patio-item p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.buy-now-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.buy-now-button:hover {
+  background-color: #45a049;
+}
+
+.gaming-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.gaming-container h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.gaming-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gaming-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  text-align: left;
+}
+
+.gaming-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.gaming-item h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.gaming-item p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.buy-now-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.buy-now-button:hover {
+  background-color: #45a049;
+}
+
+.others-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.others-container h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.others-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.others-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  text-align: left;
+}
+
+.others-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.others-item h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.others-item p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.buy-now-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.buy-now-button:hover {
+  background-color: #45a049;
+}
