@@ -9,34 +9,67 @@ html, body {
   text-align: center;
 }
 
+/* Add a background to the header */
 header {
-  background-color: #282c34;
-  padding: 20px;
-  color: white;
+  background-color: #e16051;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+/* Styling for the title */
 header h1 {
-  color: #ffffff;
-  font-size: xx-large; 
+  font-family: 'Arial', sans-serif;
+  font-size: 1.8rem;
+  color: #f9c74f;
 }
 
+/* Center navigation and add some space */
 nav ul {
-  list-style-type: none;
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
   padding: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
 }
 
+/* Navigation links */
 nav ul li {
-  margin: 0 15px;
   cursor: pointer;
-  color: white;
-  font-size: 1.2em;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
+/* Hover effect */
 nav ul li:hover {
-  text-decoration: underline;
+  color: #f9c74f;
+}
+
+/* Active page underline */
+nav ul li.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #f9c74f;
+}
+
+/* Hover background effect */
+nav ul li:hover::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #f9c74f;
 }
 
 .minimized-button {

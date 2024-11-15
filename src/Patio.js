@@ -20,7 +20,7 @@ const Patio = () => {
 
   return (
     <div className="patio-container">
-      <h1>Patio</h1>
+      <h2>Patio Chairs</h2>
       <div className="patio-items">
         {items.map((item) => (
           <div key={item.id} className="patio-item">
@@ -28,9 +28,9 @@ const Patio = () => {
             <h2>{item.name}</h2>
             <p>{item.description}</p>
             <p>Price: ${item.price}</p>
-            {item.discount && <p>Discount: {item.discount}%</p>}
-            {item.has_rebate && <p>Rebate Available</p>}
-            <button className="buy-now-button">Buy Now</button>
+            {item.discount > 0 && <p>Discount: {item.discount}%</p>}
+            <p>Rebate: {item.has_rebate ? "Available" : "Not Available"}</p>
+            <center><button className="buy-now-button">Buy Now</button></center>
           </div>
         ))}
       </div>

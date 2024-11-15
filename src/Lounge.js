@@ -20,7 +20,7 @@ const Lounge = () => {
 
   return (
     <div className="lounge-container">
-      <h1>Lounge</h1>
+      <h2>Lounge Chairs</h2>
       <div className="lounge-items">
         {items.map((item) => (
           <div key={item.id} className="lounge-item">
@@ -28,9 +28,9 @@ const Lounge = () => {
             <h2>{item.name}</h2>
             <p>{item.description}</p>
             <p>Price: ${item.price}</p>
-            {item.discount && <p>Discount: {item.discount}%</p>}
-            {item.has_rebate && <p>Rebate Available</p>}
-            <button className="buy-now-button">Buy Now</button>
+            {item.discount > 0 && <p>Discount: {item.discount}%</p>}
+            <p>Rebate: {item.has_rebate ? "Available" : "Not Available"}</p>
+            <center><button className="buy-now-button">Buy Now</button></center>
           </div>
         ))}
       </div>

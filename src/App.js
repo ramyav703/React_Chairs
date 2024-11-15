@@ -10,6 +10,7 @@ import Gaming from "./Gaming";
 import Others from "./Others";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Office from "./Office";
 
 const App = () => {
   const [isChatVisible, setIsChatVisible] = useState(false);
@@ -21,6 +22,8 @@ const App = () => {
         return <Home />;
       case "Lounge":
         return <Lounge />;
+      case "Office":
+        return <Office />;
       case "Recliner":
         return <Recliner />;
       case "Patio":
@@ -41,15 +44,16 @@ const App = () => {
   return (
     <div className="app-container">
       <header>
-        <h1>Chair & Co.</h1>
+        <h1>Chair Couture</h1>
         <nav>
           <ul>
-            <li onClick={() => setActivePage("Home")}>Home</li>
-            <li onClick={() => setActivePage("Lounge")}>Lounge</li>
-            <li onClick={() => setActivePage("Recliner")}>Recliner</li>
-            <li onClick={() => setActivePage("Patio")}>Patio</li>
-            <li onClick={() => setActivePage("Gaming")}>Gaming</li>
-            <li onClick={() => setActivePage("Others")}>Others</li>
+            <li className={activePage === "Home" ? "active" : ""} onClick={() => setActivePage("Home")}>Home</li>
+            <li className={activePage === "Lounge" ? "active" : ""} onClick={() => setActivePage("Lounge")}>Lounge</li>
+            <li className={activePage === "Office" ? "active" : ""} onClick={() => setActivePage("Office")}>Office</li>
+            <li className={activePage === "Recliner" ? "active" : ""} onClick={() => setActivePage("Recliner")}>Recliner</li>
+            <li className={activePage === "Patio" ? "active" : ""} onClick={() => setActivePage("Patio")}>Patio</li>
+            <li className={activePage === "Gaming" ? "active" : ""} onClick={() => setActivePage("Gaming")}>Gaming</li>
+            <li className={activePage === "Others" ? "active" : ""} onClick={() => setActivePage("Others")}>Others</li>
             {activePage === "SignIn" && (
               <li onClick={() => setActivePage("SignUp")}>Sign Up</li>
             )}

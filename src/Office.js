@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Lounge.css";
 
-const Gaming = () => {
+const Lounge = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/gaming");
+        const response = await axios.get("http://127.0.0.1:8000/office/");
         setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -19,12 +19,12 @@ const Gaming = () => {
   }, []);
 
   return (
-    <div className="gaming-container">
-      <h2>Gaming Chairs</h2>
-      <div className="gaming-items">
+    <div className="lounge-container">
+      <h2>Office Chairs</h2>
+      <div className="lounge-items">
         {items.map((item) => (
-          <div key={item.id} className="gaming-item">
-            <img src={item.image} alt={item.name} className="gaming-item-image" />
+          <div key={item.id} className="lounge-item">
+            <img src={item.image} alt={item.name} className="lounge-item-image" />
             <h2>{item.name}</h2>
             <p>{item.description}</p>
             <p>Price: ${item.price}</p>
@@ -38,4 +38,4 @@ const Gaming = () => {
   );
 };
 
-export default Gaming;
+export default Lounge;
