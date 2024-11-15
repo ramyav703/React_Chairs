@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import axios from 'axios'
 
 const InputImageMessage = ({ message }) => {
   const [showForm, setShowForm] = useState(false);
