@@ -38,13 +38,7 @@ const InputImageMessage = ({ message, setMessages }) => {
         },
       });
 
-      let botMessage = {
-        text: 'message recieved',
-        sender: "bot",
-        time: getCurrentTime(),
-      };
-      if (response.data.type === "reply") {
-        botMessage = {
+        const botMessage = {
           text: response.data.message,
           sender: "bot",
           time: getCurrentTime(),
@@ -54,7 +48,6 @@ const InputImageMessage = ({ message, setMessages }) => {
         setMessages((prevMessages) => [...prevMessages, botMessage]);
 
         console.log('File uploaded successfully:', response.data);
-      }
     } catch (error) {
       console.error('Error uploading file:', error);
     }
