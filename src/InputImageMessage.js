@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import axios from 'axios'
+import axios from 'axios';
 
-const InputImageMessage = ({ message }) => {
+const InputImageMessage = ({ message, setMessages }) => {
   const [showForm, setShowForm] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -14,6 +14,11 @@ const InputImageMessage = ({ message }) => {
     setFile(e.target.files[0]);
   };
 
+  const getCurrentTime = () => {
+    const date = new Date();
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) {
@@ -23,16 +28,33 @@ const InputImageMessage = ({ message }) => {
 
     const formData = new FormData();
     formData.append('order_number', message.order_number);
-    formData.append('query', message.query)
+    formData.append('query', message.query);
     formData.append('document', file);
 
     try {
-      const response = await axios.post('http://localhost:8000/upload/', formData, {
+      const response = await axios.post('http://localhost:8000/api/order-status/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('File uploaded successfully:', response.data);
+
+      let botMessage = {
+        text: 'message recieved',
+        sender: "bot",
+        time: getCurrentTime(),
+      };
+      if (response.data.type === "reply") {
+        botMessage = {
+          text: response.data.message,
+          sender: "bot",
+          time: getCurrentTime(),
+        };
+
+        // Add response data to messages state
+        setMessages((prevMessages) => [...prevMessages, botMessage]);
+
+        console.log('File uploaded successfully:', response.data);
+      }
     } catch (error) {
       console.error('Error uploading file:', error);
     }
